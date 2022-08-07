@@ -23,8 +23,10 @@ export interface InjectedExtension {
 export interface Web3ContextValue {
   injector: InjectedExtension | null;
   setInjector: Dispatch<SetStateAction<InjectedExtension | null>>;
-  api: ApiPromise;
+  api: ApiPromise | null;
   setApi: Dispatch<SetStateAction<ApiPromise | null>>;
+  accounts: InjectedAccountWithMeta[] | null;
+  setAccounts: Dispatch<InjectedAccountWithMeta[] | null>;
 }
 
 const value: any = null;
@@ -36,10 +38,19 @@ export default Web3Context;
 export const Web3ContextProvider = (props: { children: any }) => {
   const [injector, setInjector] = useState<InjectedExtension | null>(null);
   const [api, setApi] = useState<ApiPromise | null>(null);
+  const [accounts, setAccounts] = useState<InjectedAccountWithMeta[] | null>(
+    null
+  );
+  const value: Web3ContextValue = {
+    injector,
+    setInjector,
+    api,
+    setApi,
+    accounts,
+    setAccounts,
+  };
   return (
-    <Web3Context.Provider value={{ injector, setInjector, api, setApi }}>
-      {props.children}
-    </Web3Context.Provider>
+    <Web3Context.Provider value={value}>{props.children}</Web3Context.Provider>
   );
 };
 

@@ -9,9 +9,8 @@ import Web3Context, {
 import Avatar from "../Avatar";
 
 function WalletConnection() {
-  const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
   const [error, setError] = useState("");
-  const { injector, setInjector, api, setApi } =
+  const { injector, setInjector, api, setApi, accounts, setAccounts } =
     useContext<Web3ContextValue>(Web3Context);
 
   useEffect(() => {
@@ -20,13 +19,7 @@ function WalletConnection() {
       console.log("Connecting to", wsEndpoint);
       const provider = new WsProvider(wsEndpoint);
       const _api = await ApiPromise.create({ provider });
-      // const _api = new ApiPromise(
-      //   (options as any)({
-      //     // todo: fix options type
-      //     provider,
-      //   })
-      // );
-      // await _api.isReady;
+      await _api.isReady;
       setApi(_api);
       console.log(`Api Ready for endpoint: ${wsEndpoint}`);
     };
@@ -45,11 +38,13 @@ function WalletConnection() {
       setError("No extension installed!");
       return;
     }
-    const accounts = await web3Accounts();
-    setAccounts(accounts);
-    // TODO: Choose specific account
-    const _injector = await web3FromAddress(accounts[0].address);
-    setInjector(_injector);
+    const _accounts = await web3Accounts();
+    if (_accounts.length) {
+      setAccounts(_accounts);
+      // TODO: Choose specific account
+      const _injector = await web3FromAddress(_accounts[0].address);
+      setInjector(_injector);
+    }
   };
 
   return (
@@ -58,7 +53,7 @@ function WalletConnection() {
         {!injector ? (
           <Button onClick={connectToWallet}>+</Button>
         ) : (
-          <Avatar address={accounts[0].address} />
+          <Avatar address={accounts?.[0].address} />
         )}
       </Box>
     </Box>
