@@ -8,6 +8,8 @@ import {
 } from "../../utils/misc";
 import CommentInput from "../CommentInput";
 import { useState } from "react";
+import CommentList from "../CommentList";
+import Link from "next/link";
 
 const TransferItem = (props: { transaction: any }) => {
   const { transaction } = props;
@@ -20,21 +22,31 @@ const TransferItem = (props: { transaction: any }) => {
       <HStack backgroundColor={"gray.200"} borderTopRadius={"md"} p={4}>
         <Avatar address={fromId} />
         <Box>
-          <Text fontSize="md" fontWeight={"bold"}>
-            {getAddressPreview(fromId)}
-          </Text>
+          <Link href={`/accounts/${toId}`}>
+            <Text fontSize="md" fontWeight={"bold"} cursor={"pointer"}>
+              {getAddressPreview(fromId)}
+            </Text>
+          </Link>
           <Text fontSize="xs">{getFormattedDate(timestamp)}</Text>
         </Box>
       </HStack>
       <HStack p={4}>
         <Text fontSize="md">
-          Transfered {getFormattedAmount({ amount, tokenId, sf: 6 })} {tokenId}{" "}
-          to{" "}
+          Transfered {getFormattedAmount({ amount, tokenId, sf: 6 })}
         </Text>
-        <Text fontSize="md" fontWeight={"bold"}>
-          {getAddressPreview(toId)}
-        </Text>
+        <Link href={`/tokens/${tokenId}`}>
+          <Text fontSize="md" fontWeight={"bold"} cursor={"pointer"}>
+            {tokenId}
+          </Text>
+        </Link>
+        <Text>to</Text>
+        <Link href={`/accounts/${toId}`}>
+          <Text fontSize="md" fontWeight={"bold"} cursor={"pointer"}>
+            {getAddressPreview(toId)}
+          </Text>
+        </Link>
       </HStack>
+      <CommentList comments={[]} />
       <CommentInput comment={comment} setComment={setComment} />
     </Box>
   );

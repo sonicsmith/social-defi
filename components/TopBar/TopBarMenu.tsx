@@ -25,7 +25,7 @@ const TopBarMenu = () => {
         <Link href="/profile">
           <MenuItem>Profile</MenuItem>
         </Link>
-        <Link href="/account">
+        <Link href="/accounts">
           <MenuItem>Account</MenuItem>
         </Link>
         <MenuDivider />

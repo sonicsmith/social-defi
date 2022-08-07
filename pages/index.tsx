@@ -10,7 +10,9 @@ const Home: NextPage = () => {
   return (
     <Box height={"100%"}>
       <TopBar />
-      {injector && <Feed />}
+      <Box m={"auto"} maxWidth={"400px"}>
+        {injector && <Feed />}
+      </Box>
     </Box>
   );
 };

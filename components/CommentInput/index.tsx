@@ -11,6 +11,7 @@ const CommentInput = (props: { comment: string; setComment: Function }) => {
     <HStack backgroundColor={"gray.200"} rounded={"md"} m={2} p={2}>
       <Avatar address={accounts?.[0].address} />
       <Input
+        backgroundColor={"white"}
         placeholder={"Write a comment"}
         value={comment}
         onChange={(event) => {
