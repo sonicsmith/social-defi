@@ -1,6 +1,6 @@
 import { Box, Center, Spinner } from "@chakra-ui/react";
 import { useTransfers } from "../../hooks/useTransfers";
-import TransferItem from "./TransferItem";
+import TransferItem from "../TransferItem";
 
 type TransferTransaction = {
   tokenId: string;
@@ -12,23 +12,23 @@ type TransferTransaction = {
 };
 
 const Feed = (props: {}) => {
-  const { data, loading, error } = useTransfers();
+  const { data, isLoading, error } = useTransfers();
 
   if (error) {
     // TODO
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Center>
         <Spinner size={"xl"} thickness="4px" />
       </Center>
     );
   }
-  console.log(data);
+
   return (
     <Box>
-      {data.transfers.nodes.map((transaction: TransferTransaction[]) => {
+      {data.data.map((transaction: TransferTransaction[]) => {
         return <TransferItem transaction={transaction} key={Math.random()} />;
       })}
     </Box>

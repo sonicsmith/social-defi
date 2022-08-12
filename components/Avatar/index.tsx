@@ -1,6 +1,6 @@
 import { Avatar as ChakraAvatar, Box } from "@chakra-ui/react";
 import Link from "next/link";
-import Identicon from "./../../externalLibs/react-identicon";
+import Identicon from "../Identicon";
 
 const Avatar = (props: { address: string | undefined }) => {
   const { address } = props;

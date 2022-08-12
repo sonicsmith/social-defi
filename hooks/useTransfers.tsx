@@ -1,19 +1,10 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@tanstack/react-query";
 
-const query = gql`
-  {
-    transfers(first: 5) {
-      nodes {
-        tokenId
-        amount
-        timestamp
-        fromId
-        toId
-      }
-    }
-  }
-`;
+const fetchTransfers = async () => {
+  const res = await fetch("/api/transfers");
+  return res.json();
+};
 
 export const useTransfers = () => {
-  return useQuery(query);
+  return useQuery(["transfers"], fetchTransfers);
 };
